@@ -6,135 +6,241 @@ a figma plugin and webapp for wrapping your art in something worth looking at.
 
 ## what it is
 
-frameit is a creative framing tool — part figma plugin, part standalone webapp — built around the idea that the *frame* is part of the art. you bring the content, frameit brings the context: spinning cds, cracked jewel cases, vinyl records, polaroids, film strips, photo strips, postcards, rubber stamps, wax seals, and more.
+frameit is a creative framing tool — part figma plugin, part standalone webapp — built around one idea: the *frame* is part of the art.
 
-think canva's frames feature, but built for figma-native workflows, with vector output, optional code export, and a gallery of deeply customizable frame types that actually feel like something.
+you bring the content. frameit brings the context.
 
----
-
-## the concept
-
-most design tools treat frames as a rectangle with a border. frameit treats them as objects with character — tactile, nostalgic, physical things that carry meaning before you even add your image.
-
-a cd frame isn't just a circle crop. it spins. it catches light. it has a shine overlay, a hollow center, a jewel case you can open or close. a polaroid isn't just a white border — it has aging, grain, a handwritten caption slot, a curl at the corner.
-
-the goal is to make these feel effortless to use but deeply satisfying to customize.
+think canva's frames feature, but built for figma-native workflows, with a proper gallery, vector output, optional code export, and a library of frame types that feel like physical objects — things with texture, animation, and personality.
 
 ---
 
-## frame types (planned)
+## the ux model
 
-- **cd / compact disc** — spinning or paused, with shine overlay and jewel case option
-- **vinyl record** — classic black with label area, spinning animation
-- **cd cover** — jewel case artwork, spine text, back tray card
-- **polaroid** — instant photo frame with caption area and optional aging
-- **photo strip** — 4-up vertical strip, booth-style
-- **film strip** — 35mm negative border with sprocket holes
-- **photo frame** — classic ornate or minimal frame styles
-- **postcard** — customizable front/back with stamp area and postmark
-- **rubber stamp** — bold circular or rectangular stamp with custom text
-- **wax seal** — pressed seal with monogram or icon, color options
+### in the plugin (figma)
+
+1. open frameit from the figma plugin menu
+2. a **preview panel** appears — browse the frame gallery, hover to preview, right-click to swap types or variants
+3. drop your selected layer into a frame with one click
+4. customize directly in the panel: animation state, color, wear level, label text, case type, etc.
+5. optionally export the frame as a self-contained figma component
+6. optionally copy the html/css/scss to your clipboard
+
+the preview screen always comes first — you never blindly dump an image into a frame. you see it, tune it, then confirm.
+
+### in the webapp
+
+1. visit frameit.app
+2. upload an image or start from a blank template
+3. browse the gallery and preview frames around your image in real time
+4. use creation tools to build more complex compositions (postcards, strips, etc.)
+5. export as png, svg, animated gif, or html/css snippet
 
 ---
 
-## the animation layer
+## frame catalog
 
-for the figma plugin version, frame animations are expressed as figma prototype interactions — no external dependencies. for the webapp version, frames are driven by scss/css animations, with the same visual logic.
+### disc formats
 
-example — the cd frame animation:
+#### cd — circular image crop
+- **spinning cd** — image rotates continuously, shine overlay, hollow center hole
+  - animation: `spin 3s infinite linear`
+  - states: spinning / paused / idle
+- **paused cd** — static disc, full styling, no animation
+- **cd in jewel case** — album cover sits in front, disc slides out on hover/interaction
+  - cover is the main artwork; disc slides right and reveals the cd behind it
+  - case can be open or closed state (figma prototype toggle)
+  - spine text, back tray card panel, barcode sticker area
+- **jewel case only (open)** — just the case, no disc, artwork fills the tray interior
+- **digipak** — soft-fold cardboard sleeve style, no plastic case
+
+#### vinyl record
+- **12" lp** — standard black vinyl, center label area (image or text), spinning animation
+- **7" single** — smaller, center hole is larger relative to disc
+- **picture disc** — full-bleed image printed on the vinyl surface
+- **colored vinyl** — translucent colored disc variants (red, blue, green, smoke, splatter)
+- **vinyl in sleeve** — artwork sleeve front, vinyl peeks out from top or side
+- **spinning vinyl** — `spin` animation same as cd variant, label area stays readable if slow enough
+
+#### cassette tape
+- **standard cassette** — full cassette body, two spools visible through window, label area
+- **c-shell (clear case)** — transparent housing over the cassette
+- **tape spools spinning** — spool animation tied to "playing" state
+- **lo-fi cassette** — aged, worn label, wrinkled edges, hand-labeled style
+- **mixtape cassette** — blank label with custom text and marker-style fonts
+
+#### mp3 player / ipod styles
+- **classic ipod** — white clickwheel body, small screen area for your image
+- **ipod mini** — aluminum body in color variants (pink, green, blue, silver, gold)
+- **ipod nano (1st gen)** — ultra-thin aluminum body
+- **generic mp3 player** — mid-2000s style, screen + side buttons
+- **ipod touch** — modern touchscreen style, round corners, home button
+- all have: screen area (your image fills here), clickwheel or buttons as decoration, optional earphone cable illustration
+
+---
+
+### photo & print formats
+
+#### polaroid
+- **standard polaroid** — white border, thick bottom strip, optional handwritten caption
+- **mini polaroid** — smaller format, same structure
+- **aged polaroid** — yellowed, faded, slight warp at corners
+- **color-tinted border** — border takes a color from the image or custom picker
+- **string hung** — polaroid with a tiny clothespin and string illustration
+
+#### photo strip
+- **4-up vertical strip** — classic booth style, 4 frames stacked
+- **3-up strip** — 3 frames, slightly wider proportion
+- **custom layout** — variable number of frames, configurable grid
+- strip border color, background color, footer text area (date, custom)
+
+#### film strip
+- **35mm negative strip** — perforated edges (sprocket holes), frame numbers, orange border
+- **color film** — standard c-41 color negative look
+- **b&w film** — desaturated look, silver-grain texture option
+- **slide (mounted)** — individual slide in a mount frame, transparent center
+
+#### photo frame (classic)
+- **thin modern** — 1px–4px border, minimal
+- **gallery frame** — thin black or white mat + frame
+- **ornate gold** — decorative molding illustration
+- **wooden frame** — warm-toned, natural wood texture
+- **clip frame** — just binder clips at corners, no border
+
+---
+
+### ephemera & stationery
+
+#### postcard
+- **front face** — image area, optional caption strip, decorative border options
+- **back face** — divided layout: message area, address lines, stamp box area
+- **vintage postcard** — aged paper texture, sepia tone options, serif font defaults
+- **holiday / seasonal variants** — christmas, new year, summer, etc.
+- full two-sided editor in the webapp
+
+#### rubber stamp
+- **circular stamp** — text curves around the outside, icon in center
+- **rectangular stamp** — bold border, text in rows, dated format option
+- **distress level** — slider from clean to heavily worn (affects ink coverage)
+- **ink color** — red, blue, black, purple, custom
+- **"received" stamp** — prefab date-received style
+
+#### wax seal
+- **round seal** — pressed wax with embossed design in center
+- **wax color picker** — red, burgundy, navy, black, gold, ivory, custom
+- **monogram seal** — single or double letter inset
+- **icon seal** — small icon presets (star, crown, flower, moon, etc.)
+- **seal + envelope flap** — seal placed on a folded envelope edge illustration
+
+---
+
+## animation states
+
+every animated frame type (cd, vinyl, cassette, ipod) supports three states:
+
+| state | behavior |
+|---|---|
+| `spinning` | continuous rotation, full speed |
+| `paused` | frozen mid-rotation (no snap to 0) |
+| `idle` | stopped at 0°, clean rest position |
+
+in the figma plugin, states map to prototype interactions (click to play/pause toggle).
+in the webapp, states are toggled via class on the container element.
 
 ```scss
-.artwork {
-  border-radius: 50%;
-  overflow: hidden;
-  position: relative;
-
-  &:before {
-    // shine overlay
-    content: '';
-    position: absolute;
-    width: 100%;
-    height: 100%;
-    z-index: 2;
-    background: url(shine.png) center no-repeat;
-    background-size: cover;
-    mix-blend-mode: overlay;
-  }
-
-  &:after {
-    // center hole
-    content: '';
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    background: white;
-    border-radius: 50%;
-    box-shadow: inset 0 .2em .2em rgba(0,0,0,.25);
-  }
-
-  img {
-    display: block;
-    width: 100%;
-    animation: spin 3s infinite linear;
-    border-radius: 50%;
-  }
-}
-
+// cd / vinyl base spin
 @keyframes spin {
   to { transform: rotate(360deg); }
 }
-```
 
-each frame type has a `paused`, `playing`, and `idle` state. controls are intuitive — one toggle to spin, one to pause.
+// cassette spool spin (smaller, faster)
+@keyframes spool {
+  to { transform: rotate(360deg); }
+}
+
+// the paused state is just animation-play-state: paused
+// no snap — it freezes wherever it is
+.frame--paused img {
+  animation-play-state: paused;
+}
+```
 
 ---
 
-## the gallery
+## jewel case hover — the slide mechanic
 
-both the plugin and the webapp include a browsable gallery of frame presets. presets are community-contributed and curated. every preset is:
+one of the signature interactions: the cd lives behind the album cover inside a jewel case. on hover (or prototype trigger in figma), the cover shifts left and the disc slides out to the right.
 
-- fully editable with simple controls (no design knowledge required)
-- vector-based where possible
-- exportable as png, svg, or css/html snippet
+```scss
+.album-wrapper {
+  position: relative;
 
-the gallery is the heart of the product — it should feel like browsing a vintage shop, not a dropdown menu.
+  .thumbs-album {
+    // the cover art
+    position: relative;
+    z-index: 10;
+    transition: all 0.3s;
+  }
+
+  .compact-disc {
+    // the cd behind the cover
+    position: absolute;
+    margin-left: 120px;
+    transition: all 0.3s;
+    border-radius: 50%;
+    background-size: cover;
+
+    .inner {
+      // the center hole
+      background: black;
+      border-radius: 50%;
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+
+      .ring {
+        // the metallic ring
+        background: linear-gradient(to right, #fff 0%, #f1f1f1 50%, #e1e1e1 51%, #f6f6f6 100%);
+        border-radius: 50%;
+      }
+    }
+  }
+
+  &:hover .thumbs-album { margin-left: 0; }
+  &:hover .compact-disc { margin-left: 150px; }
+}
+```
+
+figma version: cover and disc are two separate layers; prototype smart animate handles the slide.
 
 ---
 
 ## creation tools (webapp)
 
-beyond framing existing images, the webapp includes drag-and-drop creation tools for:
+drag-and-drop builders for assembling compositions from scratch:
 
-- **postcards** — blank templates with photo drop zones, stamp placement, postmark overlays, handwritten font options
-- **photo strips** — layout builder with filter presets and caption slots
-- **wax seals** — monogram builder with wax color picker and stamp shape selector
-- **rubber stamps** — text customizer with font, distress level, ink color options
-- **cd covers** — full jewel case editor with front, back, and spine panels
-
----
-
-## figma plugin version
-
-the plugin lives inside figma and works directly on selected frames or images. features:
-
-- apply a frame preset to any selected layer in one click
-- customize frame properties in a side panel (color, animation state, wear/aging level)
-- prototype-ready — animations are wired to figma prototype interactions automatically
-- export frame as a component to reuse across the file
-- optional code export: copies the css/html for the framed element to clipboard
+- **postcard builder** — choose front or back, drag photos into zones, place stamps, add postmark, type message in handwriting font
+- **photo strip builder** — arrange photos in strip layout, pick filter presets, add footer text
+- **cassette label designer** — fill in track list, choose font, set side a / side b
+- **wax seal maker** — monogram picker, color picker, wax texture picker
+- **rubber stamp designer** — text input, shape (circle/rect), font, distress slider, ink color
+- **cd/vinyl label designer** — circular text layout, center image, color zones
 
 ---
 
-## webapp version
+## controls — the figma panel
 
-the webapp is a standalone tool at frameit.app (planned). features:
+simple and opinionated. no design knowledge required.
 
-- upload any image and wrap it in a frame
-- browse the gallery and apply presets
-- use creation tools to build from scratch
-- download as png, svg, or animated gif
-- share a link to your framed piece
+every frame has at most:
+
+- **swap frame** — right-click any frame to pick a different type or variant
+- **image** — drag in or link any image
+- **state toggle** — spinning / paused / idle
+- **color** — where applicable (vinyl color, wax color, stamp ink)
+- **wear** — a single slider from pristine to heavily used
+- **text** — label, caption, spine text, etc. where applicable
+- **export** — png / svg / css snippet
 
 ---
 
@@ -142,20 +248,49 @@ the webapp is a standalone tool at frameit.app (planned). features:
 
 | layer | tool |
 |---|---|
-| figma plugin | figma plugin api + vanilla ts |
-| webapp ui | react + scss modules |
-| animations | css keyframes / scss |
-| vector output | svg generation |
-| backend (webapp) | tbd — likely edge functions |
-| gallery/cms | tbd — possibly contentful or a custom json registry |
+| figma plugin | figma plugin api + typescript |
+| plugin ui | preact + scss modules (tiny bundle) |
+| webapp | react + scss modules |
+| animations | css keyframes via scss |
+| vector output | svg generation / figma vector api |
+| frame definitions | json-based frame registry (each frame is a spec file) |
+| gallery / cms | tbd — json registry or contentful |
+| backend (webapp) | edge functions (cloudflare workers or vercel) |
+| export (code) | handlebars templates → html/css/scss output |
+
+---
+
+## frame definition format (draft)
+
+each frame is described by a json spec that the gallery reads:
+
+```json
+{
+  "id": "cd-jewel-spinning",
+  "label": "cd — jewel case (spinning)",
+  "category": "disc",
+  "tags": ["cd", "jewel case", "spinning", "animated"],
+  "states": ["spinning", "paused", "idle"],
+  "slots": {
+    "cover_image": { "type": "image", "required": true },
+    "disc_image": { "type": "image", "required": false, "fallback": "cover_image" }
+  },
+  "controls": {
+    "state": { "type": "toggle", "options": ["spinning", "paused", "idle"] },
+    "spin_speed": { "type": "range", "min": 1, "max": 10, "default": 3, "unit": "s" },
+    "shine": { "type": "boolean", "default": true }
+  },
+  "exports": ["png", "svg", "css"]
+}
+```
 
 ---
 
 ## status
 
-early concept. repo is open for ideas, contributions, and frame suggestions.
+early concept. open for ideas, frame suggestions, and contributions.
 
-if you have a frame type you want to see — open an issue.
+if you know a frame type that should be here — open an issue.
 
 ---
 
